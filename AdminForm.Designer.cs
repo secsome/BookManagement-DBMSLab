@@ -45,6 +45,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.txbUsersSearch = new System.Windows.Forms.TextBox();
+            this.btnExportBackup = new System.Windows.Forms.Button();
+            this.btnImportBackup = new System.Windows.Forms.Button();
             this.tbcAdmin.SuspendLayout();
             this.tbpUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -166,6 +168,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnImportBackup);
+            this.groupBox2.Controls.Add(this.btnExportBackup);
             this.groupBox2.Controls.Add(this.txbUsersSearch);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnUpdate);
@@ -278,6 +282,28 @@
             this.txbUsersSearch.TabIndex = 4;
             this.txbUsersSearch.TextChanged += new System.EventHandler(this.txbUsersSearch_TextChanged);
             // 
+            // btnExportBackup
+            // 
+            this.btnExportBackup.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnExportBackup.Location = new System.Drawing.Point(3, 121);
+            this.btnExportBackup.Name = "btnExportBackup";
+            this.btnExportBackup.Size = new System.Drawing.Size(194, 51);
+            this.btnExportBackup.TabIndex = 5;
+            this.btnExportBackup.Text = "Export backup";
+            this.btnExportBackup.UseVisualStyleBackColor = true;
+            this.btnExportBackup.Click += new System.EventHandler(this.btnExportBackup_Click);
+            // 
+            // btnImportBackup
+            // 
+            this.btnImportBackup.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnImportBackup.Location = new System.Drawing.Point(3, 172);
+            this.btnImportBackup.Name = "btnImportBackup";
+            this.btnImportBackup.Size = new System.Drawing.Size(194, 51);
+            this.btnImportBackup.TabIndex = 6;
+            this.btnImportBackup.Text = "Import backup";
+            this.btnImportBackup.UseVisualStyleBackColor = true;
+            this.btnImportBackup.Click += new System.EventHandler(this.btnImportBackup_Click);
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -332,5 +358,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox txbUsersSearch;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnImportBackup;
+        private System.Windows.Forms.Button btnExportBackup;
     }
 }

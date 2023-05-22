@@ -171,6 +171,22 @@ namespace BookManagement
             cmd.ExecuteNonQuery();
         }
 
+        public void ExportBackup(string path)
+        {
+            var cmd = new MySqlCommand();
+            cmd.Connection = connection;
+            var backup = new MySqlBackup(cmd);
+            backup.ExportToFile(path);
+        }
+
+        public void ImportBackup(string path)
+        {
+            var cmd = new MySqlCommand();
+            cmd.Connection = connection;
+            var backup = new MySqlBackup(cmd);
+            backup.ImportFromFile(path);
+        }
+
         private MySqlConnection connection = null;
 
         public MySqlConnection Connection { get { return connection; } }

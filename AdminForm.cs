@@ -99,5 +99,38 @@ namespace BookManagement
 
         private void txbUsersSearch_TextChanged(object sender, EventArgs e)
          => tbp_UsersUpdateDataSet();
+
+        private void btnExportBackup_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.CheckPathExists = true;
+            if (sfd.ShowDialog(this) == DialogResult.OK)
+            {
+                DatabaseManagement.Instance.ExportBackup(sfd.FileName);
+                MessageBox.Show(
+                    "Backup exported!", 
+                    "Backup Exporter", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information
+                );
+            }
+        }
+
+        private void btnImportBackup_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.CheckFileExists = true;
+            if (ofd.ShowDialog(this) == DialogResult.OK)
+            {
+                DatabaseManagement.Instance.ImportBackup(ofd.FileName);
+                MessageBox.Show(
+                    "Backup imported!",
+                    "Backup Importer",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+                tbp_UsersUpdateDataSet();
+            }
+        }
     }
 }
