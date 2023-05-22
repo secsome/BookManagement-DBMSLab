@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
 
 namespace BookManagement
@@ -13,7 +14,12 @@ namespace BookManagement
         {
             try
             {
-                DatabaseManagement.Instance.Connect("localhost", "bm", "root", "root");
+                var csb = new MySqlConnectionStringBuilder();
+                csb.Server = "localhost";
+                csb.Database = "bm";
+                csb.UserID = "root";
+                csb.Password = "root";
+                DatabaseManagement.Instance.Connect(csb.ToString());
             }
             catch (Exception ex)
             {

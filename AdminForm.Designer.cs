@@ -39,6 +39,12 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
             this.tbpBook = new System.Windows.Forms.TabPage();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnUpdateBook = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txbUsersSearch = new System.Windows.Forms.TextBox();
             this.tbcAdmin.SuspendLayout();
             this.tbpUser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -52,6 +58,13 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
+            this.tbpBook.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tbcAdmin
@@ -91,7 +104,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvUsers);
             this.splitContainer1.Size = new System.Drawing.Size(1455, 715);
-            this.splitContainer1.SplitterDistance = 400;
+            this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -109,7 +122,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer2.Size = new System.Drawing.Size(400, 715);
+            this.splitContainer2.Size = new System.Drawing.Size(200, 715);
             this.splitContainer2.SplitterDistance = 150;
             this.splitContainer2.TabIndex = 2;
             // 
@@ -120,7 +133,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(400, 150);
+            this.groupBox1.Size = new System.Drawing.Size(200, 150);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "User type";
@@ -131,7 +144,7 @@
             this.rdbAdmin.Dock = System.Windows.Forms.DockStyle.Top;
             this.rdbAdmin.Location = new System.Drawing.Point(3, 46);
             this.rdbAdmin.Name = "rdbAdmin";
-            this.rdbAdmin.Size = new System.Drawing.Size(394, 22);
+            this.rdbAdmin.Size = new System.Drawing.Size(194, 22);
             this.rdbAdmin.TabIndex = 1;
             this.rdbAdmin.Text = "Administrator";
             this.rdbAdmin.UseVisualStyleBackColor = true;
@@ -144,7 +157,7 @@
             this.rdbUser.Dock = System.Windows.Forms.DockStyle.Top;
             this.rdbUser.Location = new System.Drawing.Point(3, 24);
             this.rdbUser.Name = "rdbUser";
-            this.rdbUser.Size = new System.Drawing.Size(394, 22);
+            this.rdbUser.Size = new System.Drawing.Size(194, 22);
             this.rdbUser.TabIndex = 0;
             this.rdbUser.TabStop = true;
             this.rdbUser.Text = "Normal User";
@@ -153,11 +166,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txbUsersSearch);
+            this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.btnUpdate);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(400, 561);
+            this.groupBox2.Size = new System.Drawing.Size(200, 561);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Operations";
@@ -167,7 +182,7 @@
             this.btnUpdate.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnUpdate.Location = new System.Drawing.Point(3, 24);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(394, 51);
+            this.btnUpdate.Size = new System.Drawing.Size(194, 51);
             this.btnUpdate.TabIndex = 2;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -181,11 +196,12 @@
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.RowHeadersWidth = 62;
             this.dgvUsers.RowTemplate.Height = 30;
-            this.dgvUsers.Size = new System.Drawing.Size(1051, 715);
+            this.dgvUsers.Size = new System.Drawing.Size(1251, 715);
             this.dgvUsers.TabIndex = 0;
             // 
             // tbpBook
             // 
+            this.tbpBook.Controls.Add(this.splitContainer3);
             this.tbpBook.Location = new System.Drawing.Point(4, 28);
             this.tbpBook.Name = "tbpBook";
             this.tbpBook.Padding = new System.Windows.Forms.Padding(3);
@@ -193,6 +209,74 @@
             this.tbpBook.TabIndex = 1;
             this.tbpBook.Text = "Books management";
             this.tbpBook.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.groupBox3);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer3.Size = new System.Drawing.Size(1455, 715);
+            this.splitContainer3.SplitterDistance = 200;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnUpdateBook);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 715);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Operations";
+            // 
+            // btnUpdateBook
+            // 
+            this.btnUpdateBook.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUpdateBook.Location = new System.Drawing.Point(3, 24);
+            this.btnUpdateBook.Name = "btnUpdateBook";
+            this.btnUpdateBook.Size = new System.Drawing.Size(194, 50);
+            this.btnUpdateBook.TabIndex = 0;
+            this.btnUpdateBook.Text = "Update";
+            this.btnUpdateBook.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 62;
+            this.dataGridView1.RowTemplate.Height = 30;
+            this.dataGridView1.Size = new System.Drawing.Size(1251, 715);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(3, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(143, 18);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Search Username";
+            // 
+            // txbUsersSearch
+            // 
+            this.txbUsersSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.txbUsersSearch.Location = new System.Drawing.Point(3, 93);
+            this.txbUsersSearch.Name = "txbUsersSearch";
+            this.txbUsersSearch.Size = new System.Drawing.Size(194, 28);
+            this.txbUsersSearch.TabIndex = 4;
+            this.txbUsersSearch.TextChanged += new System.EventHandler(this.txbUsersSearch_TextChanged);
             // 
             // AdminForm
             // 
@@ -216,7 +300,15 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
+            this.tbpBook.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -234,5 +326,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnUpdateBook;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox txbUsersSearch;
+        private System.Windows.Forms.Label label1;
     }
 }

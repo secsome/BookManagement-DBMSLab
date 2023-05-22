@@ -27,32 +27,13 @@ namespace BookManagement
             }
         }
 
-        private DataSet tbpUsers_ds = null;
-
         private void tbp_UsersUpdateDataSet()
         {
             if (rdbUser.Checked)
-            {
-                tbpUsers_ds = new DataSet();
-                var adapter = new MySqlDataAdapter(
-                    "select * from Reader",
-                    DatabaseManagement.Instance.Connection
-                );
-                adapter.Fill(tbpUsers_ds);
-                dgvUsers.DataSource = tbpUsers_ds;
-                dgvUsers.DataMember = tbpUsers_ds.Tables[0].TableName;
-            }
-            else if (rdbAdmin.Checked)
-            {
-                tbpUsers_ds = new DataSet();
-                var adapter = new MySqlDataAdapter(
-                    "select * from Admin",
-                    DatabaseManagement.Instance.Connection
-                );
-                adapter.Fill(tbpUsers_ds);
-                dgvUsers.DataSource = tbpUsers_ds;
-                dgvUsers.DataMember = tbpUsers_ds.Tables[0].TableName;
-            }
+                dgvUsers.DataSource = DatabaseManagement.Instance.QueryUserDataSet(txbUsersSearch.Text);
+            else
+                dgvUsers.DataSource = DatabaseManagement.Instance.QueryAdminDataSet(txbUsersSearch.Text);
+
         }
 
         private void rdbUser_CheckedChanged(object sender, EventArgs e)
@@ -63,7 +44,7 @@ namespace BookManagement
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var changes = tbpUsers_ds.GetChanges();
+            var changes = (dgvUsers.DataSource as DataSet).GetChanges();
             if (changes == null)
                 return;
 
@@ -162,5 +143,8 @@ namespace BookManagement
 
             tbp_UsersUpdateDataSet();
         }
+
+        private void txbUsersSearch_TextChanged(object sender, EventArgs e)
+         => tbp_UsersUpdateDataSet();
     }
 }
