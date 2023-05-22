@@ -19,7 +19,10 @@ namespace BookManagement
                 csb.Database = "bm";
                 csb.UserID = "root";
                 csb.Password = "root";
-                DatabaseManagement.Instance.Connect(csb.ToString());
+                csb.Pooling = true;
+                csb.MaximumPoolSize = 100;
+                csb.MinimumPoolSize = 0;
+                DatabaseManagement.PersistentReader.Connect(csb.ToString());
             }
             catch (Exception ex)
             {
@@ -34,7 +37,7 @@ namespace BookManagement
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
-            DatabaseManagement.Instance.Disconnect();
+            DatabaseManagement.PersistentReader.Disconnect();
         }
     }
 }

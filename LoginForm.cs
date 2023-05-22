@@ -29,12 +29,12 @@ namespace BookManagement
 
         private bool LoginAsAdmin(string username, string hashed_password)
         {
-            return hashed_password == DatabaseManagement.Instance.QueryAdminPassword(username);
+            return hashed_password == DatabaseManagement.PersistentReader.QueryAdminPassword(username);
         }
 
         private bool LoginAsUser(string username, string hashed_password)
         {
-            return hashed_password == DatabaseManagement.Instance.QueryUserPassword(username);
+            return hashed_password == DatabaseManagement.PersistentReader.QueryUserPassword(username);
         }
 
         private void TryLogin(string username, string password, bool admin)

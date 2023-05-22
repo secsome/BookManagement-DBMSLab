@@ -7,7 +7,7 @@ namespace BookManagement
 {
     public class DatabaseManagement
     {
-        static public DatabaseManagement Instance = new DatabaseManagement();
+        static public DatabaseManagement PersistentReader = new DatabaseManagement();
 
         public void Connect(string str)
         {

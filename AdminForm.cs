@@ -28,9 +28,9 @@ namespace BookManagement
         private void tbp_UsersUpdateDataSet()
         {
             if (rdbUser.Checked)
-                dgvUsers.DataSource = DatabaseManagement.Instance.QueryUserDataSet(txbUsersSearch.Text);
+                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryUserDataSet(txbUsersSearch.Text);
             else
-                dgvUsers.DataSource = DatabaseManagement.Instance.QueryAdminDataSet(txbUsersSearch.Text);
+                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryAdminDataSet(txbUsersSearch.Text);
 
         }
 
@@ -53,18 +53,18 @@ namespace BookManagement
                     case DataRowState.Added:
                         {
                             if (rdbUser.Checked) 
-                                DatabaseManagement.Instance.AddUser(row[0], row[1], row[2], row[3]);
+                                DatabaseManagement.PersistentReader.AddUser(row[0], row[1], row[2], row[3]);
                             else
-                                DatabaseManagement.Instance.AddAdmin(row[0], row[1]);
+                                DatabaseManagement.PersistentReader.AddAdmin(row[0], row[1]);
                         }
                         break;
                     case DataRowState.Deleted:
                         {
                             row.RejectChanges();
                             if (rdbUser.Checked)
-                                DatabaseManagement.Instance.DeleteUser(row[0]);
+                                DatabaseManagement.PersistentReader.DeleteUser(row[0]);
                             else
-                                DatabaseManagement.Instance.DeleteAdmin(row[0]);
+                                DatabaseManagement.PersistentReader.DeleteAdmin(row[0]);
                         }
                         break;
                     
@@ -77,14 +77,14 @@ namespace BookManagement
                                 var name = row[2];
                                 var birthday = row[3];
                                 row.RejectChanges();
-                                DatabaseManagement.Instance.UpdateUser(username, password, name, birthday, row[0]);
+                                DatabaseManagement.PersistentReader.UpdateUser(username, password, name, birthday, row[0]);
                             }
                             else if (rdbAdmin.Checked)
                             {
                                 var username = row[0];
                                 var password = row[1];
                                 row.RejectChanges();
-                                DatabaseManagement.Instance.UpdateAdmin(username, password, row[0]);
+                                DatabaseManagement.PersistentReader.UpdateAdmin(username, password, row[0]);
                             }
                         }
                         break;
@@ -106,7 +106,7 @@ namespace BookManagement
             sfd.CheckPathExists = true;
             if (sfd.ShowDialog(this) == DialogResult.OK)
             {
-                DatabaseManagement.Instance.ExportBackup(sfd.FileName);
+                DatabaseManagement.PersistentReader.ExportBackup(sfd.FileName);
                 MessageBox.Show(
                     "Backup exported!", 
                     "Backup Exporter", 
@@ -122,7 +122,7 @@ namespace BookManagement
             ofd.CheckFileExists = true;
             if (ofd.ShowDialog(this) == DialogResult.OK)
             {
-                DatabaseManagement.Instance.ImportBackup(ofd.FileName);
+                DatabaseManagement.PersistentReader.ImportBackup(ofd.FileName);
                 MessageBox.Show(
                     "Backup imported!",
                     "Backup Importer",
