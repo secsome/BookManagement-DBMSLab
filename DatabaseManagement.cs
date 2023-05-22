@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using System.IO;
+using System.IO.Compression;
 using MySql.Data.MySqlClient;
 
 namespace BookManagement
@@ -176,7 +178,14 @@ namespace BookManagement
             var cmd = new MySqlCommand();
             cmd.Connection = connection;
             var backup = new MySqlBackup(cmd);
-            backup.ExportToFile(path);
+
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                using (var zip = new GZipStream(fs, CompressionLevel.Optimal))
+                {
+                    backup.ExportToStream(zip);
+                }
+            }
         }
 
         public void ImportBackup(string path)
@@ -184,7 +193,14 @@ namespace BookManagement
             var cmd = new MySqlCommand();
             cmd.Connection = connection;
             var backup = new MySqlBackup(cmd);
-            backup.ImportFromFile(path);
+
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (var zip = new GZipStream(fs, CompressionMode.Decompress))
+                {
+                    backup.ImportFromStream(zip);
+                }
+            }
         }
 
         private MySqlConnection connection = null;
