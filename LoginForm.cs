@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace BookManagement
 {
@@ -29,12 +31,38 @@ namespace BookManagement
 
         private bool LoginAsAdmin(string username, string hashed_password)
         {
-            return true;
+            MySqlCommand cmd = new MySqlCommand(
+                string.Format(
+                    "select Password from Admin where Username='{0}'",
+                    username
+                ),
+                DatabaseManagement.Instance.Connection
+            );
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read())
+                return false;
+            var result = reader.GetString(0);
+            reader.Close();
+
+            return hashed_password == result;
         }
 
         private bool LoginAsUser(string username, string hashed_password)
         {
-            return false;
+            MySqlCommand cmd = new MySqlCommand(
+                string.Format(
+                    "select Password from Reader where Username='{0}'",
+                    username
+                ),
+                DatabaseManagement.Instance.Connection
+            );
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read())
+                return false;
+            var result = reader.GetString(0);
+            reader.Close();
+
+            return hashed_password == result;
         }
 
         private void TryLogin(string username, string password, bool admin)
