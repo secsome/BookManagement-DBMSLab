@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data;
+﻿using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace BookManagement
@@ -27,12 +21,10 @@ namespace BookManagement
         public string QueryUserPassword(string username)
         {
             MySqlCommand cmd = new MySqlCommand(
-                string.Format(
-                    "select Password from Reader where Username='{0}'",
-                    username
-                ),
+                "select Password from Reader where Username = @username",
                 connection
             );
+            cmd.Parameters.AddWithValue("username", username);
             var reader = cmd.ExecuteReader();
             if (!reader.Read())
                 return string.Empty;
@@ -44,12 +36,10 @@ namespace BookManagement
         public string QueryAdminPassword(string username)
         {
             MySqlCommand cmd = new MySqlCommand(
-                string.Format(
-                    "select Password from Admin where Username='{0}'",
-                    username
-                ),
+                "select Password from Admin where Username = @username",
                 connection
             );
+            cmd.Parameters.AddWithValue("username", username);
             var reader = cmd.ExecuteReader();
             if (!reader.Read())
                 return string.Empty;
@@ -63,10 +53,12 @@ namespace BookManagement
             if (!string.IsNullOrEmpty(username))
             {
                 var result = new DataTable();
-                var adapter = new MySqlDataAdapter(
-                    string.Format("select * from Reader where Username like \"%{0}%\"", username),
+                var cmd = new MySqlCommand(
+                    "select * from Reader where instr(Username, @username)",
                     connection
                 );
+                cmd.Parameters.AddWithValue("username", username);
+                var adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(result);
                 return result;
             }
@@ -87,10 +79,12 @@ namespace BookManagement
             if (!string.IsNullOrEmpty(username))
             {
                 var result = new DataTable();
-                var adapter = new MySqlDataAdapter(
-                    string.Format("select * from Admin where Username like \"%{0}%\"", username),
+                var cmd = new MySqlCommand(
+                    "select * from Admin where instr(Username, @username)",
                     connection
                 );
+                cmd.Parameters.AddWithValue("username", username);
+                var adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(result);
                 return result;
             }
@@ -105,6 +99,76 @@ namespace BookManagement
                 return result;
             }
             
+        }
+
+        public void AddUser(object username, object password, object name, object birthday)
+        {
+            var cmd = new MySqlCommand(
+                "insert into Reader values(@username, @password, @name, @birthday)",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Parameters.AddWithValue("password", PasswordHasher.Hash(password as string));
+            cmd.Parameters.AddWithValue("name", name);
+            cmd.Parameters.AddWithValue("birthday", birthday);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void AddAdmin(object username, object password)
+        {
+            var cmd = new MySqlCommand(
+                "insert into Admin values(@username, @password)",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Parameters.AddWithValue("password", PasswordHasher.Hash(password as string));
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteUser(object username)
+        {
+            var cmd = new MySqlCommand(
+                "delete from Reader where Username = @username",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteAdmin(object username)
+        {
+            var cmd = new MySqlCommand(
+                "delete from Admin where Username = @username",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateUser(object username, object password, object name, object birthday, object oldusername)
+        {
+            var cmd = new MySqlCommand(
+                "update Reader set Username=@username, Password=@password, name=@name,birth=@birthday where Username=@oldusername",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Parameters.AddWithValue("password", password);
+            cmd.Parameters.AddWithValue("name", name);
+            cmd.Parameters.AddWithValue("birthday", birthday);
+            cmd.Parameters.AddWithValue("oldusername", oldusername);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateAdmin(object username, object password, object oldusername)
+        {
+            var cmd = new MySqlCommand(
+                "update Admin set Username=@username, Password=@password where Username=@oldusername",
+                connection
+            );
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Parameters.AddWithValue("password", password);
+            cmd.Parameters.AddWithValue("oldusername", oldusername);
+            cmd.ExecuteNonQuery();
         }
 
         private MySqlConnection connection = null;

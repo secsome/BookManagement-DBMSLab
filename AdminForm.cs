@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 
 namespace BookManagement
 {
@@ -44,95 +42,50 @@ namespace BookManagement
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var changes = (dgvUsers.DataSource as DataSet).GetChanges();
+            var changes = (dgvUsers.DataSource as DataTable).GetChanges();
             if (changes == null)
                 return;
 
-            var table = changes.Tables[0];
-            foreach(DataRow row in table.Rows)
+            foreach(DataRow row in changes.Rows)
             {
                 switch (row.RowState)
                 {
                     case DataRowState.Added:
                         {
                             if (rdbUser.Checked) 
-                            {
-                                var cmd = new MySqlCommand(
-                                    string.Format(
-                                        "insert into Reader values('{0}','{1}','{2}','{3}')",
-                                        row[0], PasswordHasher.Hash(row[1] as string), row[2], row[3]
-                                    ),
-                                    DatabaseManagement.Instance.Connection
-                                );
-                                cmd.ExecuteNonQuery();
-                            }
-                            else if(rdbAdmin.Checked)
-                            {
-                                var cmd = new MySqlCommand(
-                                    string.Format(
-                                        "insert into Admin values('{0}','{1}')",
-                                        row[0], PasswordHasher.Hash(row[1] as string)
-                                    ),
-                                    DatabaseManagement.Instance.Connection
-                                );
-                                cmd.ExecuteNonQuery();
-                            }
+                                DatabaseManagement.Instance.AddUser(row[0], row[1], row[2], row[3]);
+                            else
+                                DatabaseManagement.Instance.AddAdmin(row[0], row[1]);
                         }
                         break;
                     case DataRowState.Deleted:
-                        row.RejectChanges();
-                        if (rdbUser.Checked)
                         {
-                            var cmd = new MySqlCommand(
-                                string.Format(
-                                    "delete from Reader where Username='{0}'",
-                                    row[0]
-                                ),
-                                DatabaseManagement.Instance.Connection
-                            );
-                            cmd.ExecuteNonQuery();
-                        }
-                        else if (rdbAdmin.Checked)
-                        {
-                            var cmd = new MySqlCommand(
-                                string.Format(
-                                    "delete from Admin where Username='{0}'",
-                                    row[0]
-                                ),
-                                DatabaseManagement.Instance.Connection
-                            );
-                            cmd.ExecuteNonQuery();
+                            row.RejectChanges();
+                            if (rdbUser.Checked)
+                                DatabaseManagement.Instance.DeleteUser(row[0]);
+                            else
+                                DatabaseManagement.Instance.DeleteAdmin(row[0]);
                         }
                         break;
                     
                     case DataRowState.Modified:
-                        if (rdbUser.Checked)
                         {
-                            var str = string.Format(
-                                "update Reader set Username='{0}',Password='{1}',name='{2}',birth='{3}' where Username='",
-                                row[0], PasswordHasher.Hash(row[1] as string), row[2], row[3]
-                            );
-                            row.RejectChanges();
-                            str += row[0] + "'";
-                            var cmd = new MySqlCommand(
-                                str,
-                                DatabaseManagement.Instance.Connection
-                            );
-                            cmd.ExecuteNonQuery();
-                        }
-                        else if (rdbAdmin.Checked)
-                        {
-                            var str = string.Format(
-                                "update Admin set Username='{0}',Password='{1}' where Username='",
-                                row[0], PasswordHasher.Hash(row[1] as string)
-                            );
-                            row.RejectChanges();
-                            str += row[0] + "'";
-                            var cmd = new MySqlCommand(
-                                str,
-                                DatabaseManagement.Instance.Connection
-                            );
-                            cmd.ExecuteNonQuery();
+                            if (rdbUser.Checked)
+                            {
+                                var username = row[0];
+                                var password = row[1];
+                                var name = row[2];
+                                var birthday = row[3];
+                                row.RejectChanges();
+                                DatabaseManagement.Instance.UpdateUser(username, password, name, birthday, row[0]);
+                            }
+                            else if (rdbAdmin.Checked)
+                            {
+                                var username = row[0];
+                                var password = row[1];
+                                row.RejectChanges();
+                                DatabaseManagement.Instance.UpdateAdmin(username, password, row[0]);
+                            }
                         }
                         break;
                     
