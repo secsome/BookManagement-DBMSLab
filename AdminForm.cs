@@ -28,9 +28,9 @@ namespace BookManagement
         private void tbp_UsersUpdateDataSet()
         {
             if (rdbUser.Checked)
-                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryUserDataSet(txbUsersSearch.Text);
+                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryUserDataTable(txbUsersSearch.Text);
             else
-                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryAdminDataSet(txbUsersSearch.Text);
+                dgvUsers.DataSource = DatabaseManagement.PersistentReader.QueryAdminDataTable(txbUsersSearch.Text);
 
         }
 
